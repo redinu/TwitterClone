@@ -1,7 +1,8 @@
-package byAJ.repositories;
+package me.aoa4eva.demo.repositories;
 
-import byAJ.models.Role;
 import org.springframework.data.repository.CrudRepository;
+
+import me.aoa4eva.demo.models.Role;
 
 public interface RoleRepository extends CrudRepository<Role, Long>{
     Role findByRole(String role);

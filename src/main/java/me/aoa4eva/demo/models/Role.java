@@ -1,4 +1,4 @@
-package byAJ.models;
+package me.aoa4eva.demo.models;
 
 import javax.persistence.*;
 import java.util.Collection;

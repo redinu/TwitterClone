@@ -1,8 +1,5 @@
-package byAJ.controllers;
+package me.aoa4eva.demo.controllers;
 
-import byAJ.models.User;
-import byAJ.services.UserService;
-import byAJ.validators.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import me.aoa4eva.demo.models.User;
+import me.aoa4eva.demo.services.UserService;
+import me.aoa4eva.demo.validators.UserValidator;
 
 import javax.validation.Valid;
 

@@ -1,12 +1,13 @@
-package byAJ.services;
+package me.aoa4eva.demo.services;
 
-import byAJ.models.Role;
-import byAJ.models.User;
-import byAJ.repositories.RoleRepository;
-import byAJ.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import me.aoa4eva.demo.models.Role;
+import me.aoa4eva.demo.models.User;
+import me.aoa4eva.demo.repositories.RoleRepository;
+import me.aoa4eva.demo.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

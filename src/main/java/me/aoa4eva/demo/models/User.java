@@ -1,4 +1,4 @@
-package byAJ.models;
+package me.aoa4eva.demo.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;

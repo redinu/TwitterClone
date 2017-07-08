@@ -1,14 +1,15 @@
-package byAJ.services;
+package me.aoa4eva.demo.services;
 
-import byAJ.models.Role;
-import byAJ.models.User;
-import byAJ.repositories.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import me.aoa4eva.demo.models.Role;
+import me.aoa4eva.demo.models.User;
+import me.aoa4eva.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
