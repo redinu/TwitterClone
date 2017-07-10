@@ -1,14 +1,14 @@
-package me.aoa4eva.demo.configs;
+package miniTwitter.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import me.aoa4eva.demo.models.Role;
-import me.aoa4eva.demo.models.User;
-import me.aoa4eva.demo.repositories.RoleRepository;
-import me.aoa4eva.demo.repositories.UserRepository;
+import miniTwitter.demo.models.Role;
+import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.RoleRepository;
+import miniTwitter.demo.repositories.UserRepository;
 
 import java.util.Arrays;
 
@@ -52,7 +52,7 @@ public class DataLoader implements CommandLineRunner{
         user = new User("sam@every.com","password","Sam","Everyman", true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList(userRole, adminRole));
-        userRepository.save(user);
-    }
+       userRepository.save(user); 
+  }
 }
 

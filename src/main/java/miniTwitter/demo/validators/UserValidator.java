@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.validators;
+package miniTwitter.demo.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,8 +7,8 @@ import org.springframework.validation.ValidationUtils;
 
 import org.springframework.validation.Validator;
 
-import me.aoa4eva.demo.models.User;
-import me.aoa4eva.demo.repositories.UserRepository;
+import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.UserRepository;
 
 @Component
 public class UserValidator implements Validator {

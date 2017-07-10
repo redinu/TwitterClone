@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.models;
+package miniTwitter.demo.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -14,8 +14,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Column(name = "email", nullable = false)
+    
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password")
@@ -26,6 +26,10 @@ public class User {
 
     @Column(name = "last_name")
     private String lastName;
+    
+
+	@Column (name = "username")
+    private String username;
 
     @Column(name = "enabled")
     private boolean enabled;
@@ -39,7 +43,7 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.enabled = enabled;
+       // this.enabled = enabled;
     }
 
     public User() {
@@ -85,7 +89,15 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+    public String getUsername() {
+		return username;
+	}
 
+	public void setUsername(String username) {
+		this.username = username;
+	}
+/*
     public boolean isEnabled() {
         return enabled;
     }
@@ -93,7 +105,7 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
+*/
     public Collection<Role> getRoles() {
         return roles;
     }

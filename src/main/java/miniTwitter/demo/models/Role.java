@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.models;
+package miniTwitter.demo.models;
 
 import javax.persistence.*;
 import java.util.Collection;

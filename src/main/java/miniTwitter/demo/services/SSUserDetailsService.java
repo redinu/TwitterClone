@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.services;
+package miniTwitter.demo.services;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import me.aoa4eva.demo.models.Role;
-import me.aoa4eva.demo.models.User;
-import me.aoa4eva.demo.repositories.UserRepository;
+import miniTwitter.demo.models.Role;
+import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class SSUserDetailsService implements UserDetailsService {
                 System.out.println("user not found with the provided username " + user.toString());
                 return null;
             }
-            System.out.println(" user from username " + user.toString());
+           System.out.println(" user from username " + user.toString());
             return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user));
         } catch (Exception e){
             throw new UsernameNotFoundException("User not found");
@@ -49,4 +49,6 @@ public class SSUserDetailsService implements UserDetailsService {
         System.out.println("user authorities are " + authorities.toString());
         return authorities;
     }
-}
+
+    }
+

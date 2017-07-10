@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.controllers;
+package miniTwitter.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import me.aoa4eva.demo.models.User;
-import me.aoa4eva.demo.services.UserService;
-import me.aoa4eva.demo.validators.UserValidator;
+import miniTwitter.demo.models.User;
+import miniTwitter.demo.services.UserService;
+import miniTwitter.demo.validators.UserValidator;
 
 import javax.validation.Valid;
 
@@ -25,12 +25,12 @@ public class HomeController {
 
     @RequestMapping("/")
     public String index(){
-        return "index";
+        return "landingpage";
     }
 
     @RequestMapping("/login")
     public String login(){
-        return "login";
+        return "loginpage";
     }
 
     @RequestMapping(value="/register", method = RequestMethod.GET)
@@ -51,7 +51,12 @@ public class HomeController {
             userService.saveUser(user);
             model.addAttribute("message", "User Account Successfully Created");
         }
-        return "index";
+        return "newsfeed";
+    }
+    
+    @RequestMapping("/logout")
+    public String LoggingOut(){
+    	return "landingpage";
     }
 
     public UserValidator getUserValidator() {

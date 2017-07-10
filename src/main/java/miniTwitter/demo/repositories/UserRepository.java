@@ -1,8 +1,8 @@
-package me.aoa4eva.demo.repositories;
+package miniTwitter.demo.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import me.aoa4eva.demo.models.User;
+import miniTwitter.demo.models.User;
 
 public interface UserRepository extends CrudRepository<User, Long>{
 

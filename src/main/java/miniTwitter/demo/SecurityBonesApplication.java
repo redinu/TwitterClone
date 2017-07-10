@@ -1,4 +1,4 @@
-package me.aoa4eva.demo;
+package miniTwitter.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

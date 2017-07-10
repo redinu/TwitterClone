@@ -1,13 +1,13 @@
-package me.aoa4eva.demo.services;
+package miniTwitter.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import me.aoa4eva.demo.models.Role;
-import me.aoa4eva.demo.models.User;
-import me.aoa4eva.demo.repositories.RoleRepository;
-import me.aoa4eva.demo.repositories.UserRepository;
+import miniTwitter.demo.models.Role;
+import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.RoleRepository;
+import miniTwitter.demo.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,18 +37,17 @@ public class UserService {
         return userRepository.countByEmail(email);
     }
 
-
     public void saveUser(User user) {
         user.setRoles(Arrays.asList(roleRepository.findByRole("USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
+       // user.setEnabled(true);
         userRepository.save(user);
     }
 
     public void saveAdmin(User user) {
         user.setRoles(Arrays.asList(roleRepository.findByRole("ADMIN")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
+        //user.setEnabled(true);
         userRepository.save(user);
     }
 }

@@ -1,4 +1,4 @@
-package me.aoa4eva.demo.configs;
+package miniTwitter.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import me.aoa4eva.demo.repositories.UserRepository;
-import me.aoa4eva.demo.services.SSUserDetailsService;
+import miniTwitter.demo.repositories.UserRepository;
+import miniTwitter.demo.services.SSUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
