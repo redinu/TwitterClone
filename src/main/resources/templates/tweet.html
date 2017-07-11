@@ -12,30 +12,11 @@
 		<th:block th:replace="base :: nav"></th:block>
 		
 		<div class="container">
-			<div th:replace="base :: sidebar"></div>
-			<br/>
-			<br/>
-			<div th:if="${message!=null}" >
-				<h3 th:text="${message}"></h3>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-sm-4 col-md-6">
-		       <form th:action="@{/savepost}"  method="post">
-					
-					<div class="form-group">
-						<textarea class="form-control" rows="3" placeholder= "new post" name="content"></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-
-				</form>
-		
-		    </div>
-		    <div class ="col-sm-4 col-md-8">
+		<div class ="col-sm-4 col-md-8">
 				<ul>
 					<div th:each="post : ${allPosts}">
 						<div class="content">
-						<p><a th:href="@{/post/{id}(id = ${post.postedBy.id})}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/>
+						<p><a href="#" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/>
 							<small><span th:text="${post.postedBy.username}"></span></small>
 						</p>
 						<p th:text="${post.content}"/>
@@ -45,8 +26,7 @@
 				
 				</ul>
 			</div>
-		</div>
-		
-		<th:block th:replace="base :: footlinks"></th:block>
-	</body>
+	</div>
+	<th:block th:replace="base :: footlinks"></th:block>
+</body>
 </html>

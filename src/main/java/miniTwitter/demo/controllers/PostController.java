@@ -59,10 +59,10 @@ public class PostController {
     }
     
     @RequestMapping(value="/post/{id}", method = RequestMethod.GET)
-    public String savePost(@PathVariable Long id,  Principal p, Model m){
+    public String savePost(@PathVariable(value="id") Long id,  Principal p, Model m){
     	List<Post> post = postRepository.findByPostedBy_Id(id);
     	m.addAttribute("allPosts",post);
-    	return "friendtweet";
+    	return "tweet";
     }
     
     }
