@@ -1,15 +1,11 @@
 package miniTwitter.demo.models;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.*;
 
 import javax.persistence.*;
 import javax.persistence.Id;
-import java.util.Collection;
+
 
 @Entity
-
 public class Friendship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

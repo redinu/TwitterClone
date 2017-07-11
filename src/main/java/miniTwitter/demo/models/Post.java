@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "userData")
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,7 @@ public class Post {
    private User postedBy;
    
    
-	private Date postdate;
+	private Date postedDate;
 
 
 	public String getContent() {
@@ -47,13 +47,13 @@ public class Post {
 	}
 
 
-	public Date getPostdate() {
-		return postdate;
+	public Date getPostedDate() {
+		return postedDate;
 	}
 
 
-	public void setPostdate(Date postdate) {
-		this.postdate = postdate;
+	public void setPostedDate(Date postedDate) {
+		this.postedDate = postedDate;
 	}
 
 
