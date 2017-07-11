@@ -64,7 +64,7 @@ public class HomeController {
             model.addAttribute("message", "User Account Successfully Created");
             model.addAttribute("newpost", new Post());
         }
-        return "newsfeed";
+        return "redirect:/login";
     }
     
     @RequestMapping("/logout")
@@ -76,13 +76,9 @@ public class HomeController {
     public String profile(Principal principal, Model model){
     	User user = userRepository.findByEmail(principal.getName());
     	List<Post> posts = postRepository.findByPostedBy_Id(user.getId());
+    	model.addAttribute("allPosts", posts);
     	
-    	if(posts!=null){
-    		model.addAttribute("myposts", posts);
-    	}else{
-    		model.addAttribute("message", "Send your first tweet!");
-    	}
-    	return "profile";
+    	return "tweet";
     }
 
     public UserValidator getUserValidator() {

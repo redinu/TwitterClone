@@ -31,11 +31,14 @@
 				</form>
 		
 		    </div>
+		    
+		    <br />
+		    <br />
 		    <div class ="col-sm-4 col-md-8">
 				<ul>
 					<div th:each="post : ${allPosts}">
 						<div class="content">
-						<p><a th:href="@{'/post/' + {post.postedBy.id}}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/>
+						<p><a th:href="@{/post/{id}(id = ${post.postedBy.id})}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/>
 							<small><span th:text="${post.postedBy.username}"></span></small>
 						</p>
 						<p th:text="${post.content}"/>

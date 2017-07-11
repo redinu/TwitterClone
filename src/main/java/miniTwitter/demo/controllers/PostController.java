@@ -62,7 +62,7 @@ public class PostController {
     public String savePost(@PathVariable Long id,  Principal p, Model m){
     	List<Post> post = postRepository.findByPostedBy_Id(id);
     	m.addAttribute("allPosts",post);
-    	return "friendtweet";
+    	return "tweet";
     }
     
     }
