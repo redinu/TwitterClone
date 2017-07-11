@@ -1,0 +1,8 @@
+LINUX SQL SCRIPTS
+-----------------
+
+create database twitter;
+
+create user 'twitterUser'@'localhost' identified by 'tweet';
+
+grant all on twitter.* to 'twitterUser'@'localhost';
