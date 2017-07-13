@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import miniTwitter.demo.models.Friendship;
+import miniTwitter.demo.models.Photo;
 import miniTwitter.demo.models.Post;
 import miniTwitter.demo.models.User;
 import miniTwitter.demo.repositories.FriendshipRepository;
+import miniTwitter.demo.repositories.PhotoRepository;
 import miniTwitter.demo.repositories.PostRepository;
 import miniTwitter.demo.repositories.UserRepository;
 import miniTwitter.demo.services.UserService;
@@ -38,18 +40,27 @@ public class PostController {
     @Autowired
     private FriendshipRepository friendshipRepository;
     
+    @Autowired
+    private PhotoRepository photoRepository;
+    
     @RequestMapping(value="/newsfeed", method = RequestMethod.GET)
     public String getPostForm(Model m, Principal p){
     	
     	User user = userRepository.findByEmail(p.getName());
     	List<Friendship> friendship = friendshipRepository.findByFollower_Id(user.getId());
     	List<Post> posts = new ArrayList<Post>();
+    	List<Photo> pictures =  new ArrayList<Photo>();
+    	
     	for(Friendship fr : friendship){
     		User u = fr.getFollowing();
     		posts.addAll(postRepository.findByPostedBy_Id(u.getId()));
-    		
+    		pictures.addAll(photoRepository.findByUser_Id(u.getId()));
     	}
+    	
+    	posts.addAll(postRepository.findByPostedBy_Id(user.getId()));
+    	pictures.addAll(photoRepository.findByUser_Id(user.getId()));
     	m.addAttribute("allPosts",posts);
+    	m.addAttribute("photos", pictures);
     	return "newsfeed";
     	
     }
@@ -58,6 +69,7 @@ public class PostController {
     public String allPost(Model m){
     	
     	m.addAttribute("allPosts",postRepository.findAll());
+    	m.addAttribute("photos", photoRepository.findAll());
     	return "newsfeed";
     	
     }
@@ -69,14 +81,17 @@ public class PostController {
     	post.setPostedBy(userRepository.findByEmail(p.getName()));
     	post.setPostedDate(new Date());
     	postRepository.save(post);
-    	m.addAttribute("allPosts",postRepository.findAll());
-    	return "newsfeed";
+    	
+    	return "redirect:/newsfeed";
     }
     
     @RequestMapping(value="/post/{id}", method = RequestMethod.GET)
     public String savePost(@PathVariable(value="id") Long id,  Principal p, Model m){
+    	
     	List<Post> post = postRepository.findByPostedBy_Id(id);
+    	List<Photo> photos = photoRepository.findByUser_Id(id);
     	m.addAttribute("allPosts",post);
+    	m.addAttribute("photos", photos);
     	return "tweet";
     }
     
