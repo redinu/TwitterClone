@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import miniTwitter.demo.models.Friendship;
 import miniTwitter.demo.models.Post;
 import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.FriendshipRepository;
 import miniTwitter.demo.repositories.PostRepository;
 import miniTwitter.demo.repositories.UserRepository;
 import miniTwitter.demo.services.UserService;
 import miniTwitter.demo.validators.UserValidator;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,11 +28,6 @@ import javax.validation.Valid;
 @Controller
 public class PostController {
 
-    @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private UserService userService;
   
     @Autowired
     private UserRepository userRepository;
@@ -37,10 +35,27 @@ public class PostController {
     @Autowired
     private PostRepository postRepository;
 
-
+    @Autowired
+    private FriendshipRepository friendshipRepository;
     
     @RequestMapping(value="/newsfeed", method = RequestMethod.GET)
     public String getPostForm(Model m, Principal p){
+    	
+    	User user = userRepository.findByEmail(p.getName());
+    	List<Friendship> friendship = friendshipRepository.findByFollower_Id(user.getId());
+    	List<Post> posts = new ArrayList<Post>();
+    	for(Friendship fr : friendship){
+    		User u = fr.getFollowing();
+    		posts.addAll(postRepository.findByPostedBy_Id(u.getId()));
+    		
+    	}
+    	m.addAttribute("allPosts",posts);
+    	return "newsfeed";
+    	
+    }
+    
+    @RequestMapping(value="/allposts", method = RequestMethod.GET)
+    public String allPost(Model m){
     	
     	m.addAttribute("allPosts",postRepository.findAll());
     	return "newsfeed";

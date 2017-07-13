@@ -5,18 +5,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import miniTwitter.demo.models.Friendship;
 import miniTwitter.demo.models.Post;
 import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.FriendshipRepository;
 import miniTwitter.demo.repositories.PostRepository;
 import miniTwitter.demo.repositories.UserRepository;
 import miniTwitter.demo.services.UserService;
 import miniTwitter.demo.validators.UserValidator;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -34,10 +40,15 @@ public class HomeController {
     
     @Autowired
     private PostRepository postRepository;
+    
+    @Autowired
+    private FriendshipRepository friendshipRepository;
 
     @RequestMapping("/")
-    public String index(){
-        return "landingpage";
+    public String index(Model m){
+    	
+    	m.addAttribute("allPosts",postRepository.findAll());
+    	return "newsfeed";
     }
 
     @RequestMapping("/login")
@@ -80,7 +91,107 @@ public class HomeController {
     	
     	return "tweet";
     }
-
+    
+    @RequestMapping("/allusers")
+    public String getallUsers( Model model){
+    	
+    	Iterable<User> users = userRepository.findAll();
+    	model.addAttribute("everyUser", users);
+    	
+    	return "allusers";
+    }
+    
+    @RequestMapping("/allusers/me")
+    public String allUsers(Principal principal, Model model){
+    	User u = userRepository.findByEmail(principal.getName());
+    	List<Friendship> friends = friendshipRepository.findByFollower_Id(u.getId());
+    	Iterable<User> users = userRepository.findAll();
+    	Map<User, Boolean> allusers = new HashMap<User, Boolean>();
+    	
+    	for(User user: users){
+    			Friendship fd = friendshipRepository.findByFollower_IdAndFollowing_Id(u.getId(), user.getId());
+    			if(fd!=null){
+    				allusers.put(user, fd.isConfirmed());
+    			
+    			}else{
+    				fd = new Friendship();
+    				fd.setConfirmed(false);
+    				allusers.put(user, fd.isConfirmed());
+    			}
+    	}
+    	
+    	model.addAttribute("allUsers", allusers);
+    	
+    	return "allusers";
+    }
+    
+    @RequestMapping("/following")
+    public String listfollower(Principal principal, Model model){
+    	
+    	User user = userRepository.findByEmail(principal.getName());
+    	
+    	List<Friendship> friends = friendshipRepository.findByFollower_Id(user.getId());
+    	
+    	List<User> users = new ArrayList<User>();
+    	
+    	for(Friendship friend : friends){
+    		
+    		users.add(friend.getFollowing());
+    	}
+    	
+    	model.addAttribute("followingUsers", users);
+    	
+    	return "allusers";
+    }
+    
+    @RequestMapping("/follower")
+    public String listfollowing(Principal principal, Model model){
+    	
+    	User user = userRepository.findByEmail(principal.getName());
+    	
+    	List<Friendship> friends = friendshipRepository.findByFollowing_Id(user.getId());
+    	
+    	Map<User, Boolean> users = new HashMap<User, Boolean>();
+    	
+    	for(Friendship friend : friends){
+    		
+    		users.put(friend.getFollower(), friend.isConfirmed());
+    	}
+    	
+    	model.addAttribute("followers", users);
+    	
+    	return "allusers";
+    }
+    
+    @RequestMapping("/follow/{id}")
+    public String follow(@PathVariable("id") Long id, Principal principal, Model model){
+    	User followed = userRepository.findOne(id);
+    	User follower = userRepository.findByEmail(principal.getName());
+    	Friendship friendship = friendshipRepository.findByFollower_IdAndFollowing_Id(follower.getId(),followed.getId());
+    	
+    	if(friendship==null){
+    		friendship = new Friendship();
+    		friendship.setFollower(follower);
+        	friendship.setFollowing(followed);
+        	friendship.setConfirmed(true);
+        	friendshipRepository.save(friendship);
+    	}
+    	
+    	/*List<Friendship> friends = friendshipRepository.findByFollower_Id(follower.getId());
+    	List<User> users = new ArrayList<User>();
+    	
+    	for(Friendship friend : friends){
+    		
+    		users.add(friend.getFollowing());
+    	}
+    	
+    	model.addAttribute("friends", users);*/
+    	
+    	return "redirect:/allusers/me";
+    }
+    
+    
+    
     public UserValidator getUserValidator() {
         return userValidator;
     }

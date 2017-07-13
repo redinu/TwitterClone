@@ -2,22 +2,25 @@ package miniTwitter.demo.models;
 
 
 import javax.persistence.*;
-import javax.persistence.Id;
 
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"follower_id", "following_id"})})
 public class Friendship {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long friendship_id;
-    
    
     @ManyToOne
     @JoinColumn(name="follower_id")
     private User follower;
+    
     @ManyToOne
     @JoinColumn(name="following_id")
     private User following;
+    
+    private boolean confirmed;
+    
 	public User getFollower() {
 		return follower;
 	}
@@ -33,5 +36,12 @@ public class Friendship {
 	public long getFriendship_id() {
 		return friendship_id;
 	}
+	public boolean isConfirmed() {
+		return confirmed;
+	}
+	public void setConfirmed(boolean confirmed) {
+		this.confirmed = confirmed;
+	}
 
+	
 }
