@@ -46,4 +46,6 @@ public class CloudinaryConfig {
                 .transformation(new Transformation().width(width).height(height).border("2px_solid_black"))
                 .imageTag(name);
     }
+
+
 }

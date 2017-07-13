@@ -33,6 +33,10 @@ public class User {
 
     @Column(name = "enabled")
     private boolean enabled;
+    
+    @ManyToOne(optional=false)
+    @JoinColumn(name="photo_Id")
+    private Photo profilePicture; 
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -97,15 +101,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-/*
-    public boolean isEnabled() {
-        return enabled;
-    }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-*/
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -114,4 +110,13 @@ public class User {
         this.roles = roles;
     }
 
+	public Photo getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(Photo profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+    
 }

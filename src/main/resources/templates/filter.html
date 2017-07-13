@@ -14,17 +14,9 @@
 
         <div class="container">
             <br /><br />
-            <h1>Upload a picture</h1>
-
-            <form method="POST" action="/upload" enctype="multipart/form-data">
-                <input type="file" name="file" /><br/><br/>
-                
-                <input type="submit" value="Submit" />
-            </form>
-            <div th:if="${message}">
-                <h2 th:text="${message}"/><br/><br/>
-            </div>
-            <!-- <div th:if="${imageurl} != null">
+			  <br /><br />
+			    <br /><br />
+            <div th:if="${imageurl} != null">
 	            <form action="/filter" >
 	            	<img th:src="${imageurl}" />
 	            	<input type="hidden" name ="imagename" th:value="${imagename}" />
@@ -43,17 +35,21 @@
         	</div>
         </div>
          <div th:if="${sizedimageurl} != null">
-                
-                <div th:utext="${sizedimageurl}">
-                
+                <ul>
+               		 <div th:utext="${sizedimageurl}"></div>
+                </ul>
 	                <form action="/save"  method="post">
 	                	<input type="hidden" name="imagename" th:value="${imagename}"/>
 	                	<input type="hidden" name="sizedimageurl" th:value="${sizedimageurl}"/>
 						<input type="submit" value="Save" />
 					</form>
-                </div>
+					
+					<form action="/upload" >
+						<input type="submit" value="Cancel" />
+					</form>
+                
             </div> 
- -->
+
         <th:block th:replace="base :: footlinks"></th:block>
     </body>
 </html>

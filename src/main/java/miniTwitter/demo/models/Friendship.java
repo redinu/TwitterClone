@@ -3,7 +3,6 @@ package miniTwitter.demo.models;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"follower_id", "following_id"})})
 public class Friendship {

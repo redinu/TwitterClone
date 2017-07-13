@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import miniTwitter.demo.models.Friendship;
+import miniTwitter.demo.models.Photo;
 import miniTwitter.demo.models.Post;
 import miniTwitter.demo.models.User;
 import miniTwitter.demo.repositories.FriendshipRepository;
+import miniTwitter.demo.repositories.PhotoRepository;
 import miniTwitter.demo.repositories.PostRepository;
 import miniTwitter.demo.repositories.UserRepository;
 import miniTwitter.demo.services.UserService;
@@ -43,6 +45,9 @@ public class HomeController {
     
     @Autowired
     private FriendshipRepository friendshipRepository;
+    
+    @Autowired
+    private PhotoRepository photoRepository;
 
     @RequestMapping("/")
     public String index(Model m){
@@ -71,6 +76,8 @@ public class HomeController {
         if (result.hasErrors()) {
             return "registration";
         } else {
+        	Photo p = photoRepository.findOne((long) 1);
+        	user.setProfilePicture(p);
             userService.saveUser(user);
             model.addAttribute("message", "User Account Successfully Created");
             model.addAttribute("newpost", new Post());
@@ -87,8 +94,11 @@ public class HomeController {
     public String profile(Principal principal, Model model){
     	User user = userRepository.findByEmail(principal.getName());
     	List<Post> posts = postRepository.findByPostedBy_Id(user.getId());
+    	List<Photo> pictures =  new ArrayList<Photo>();
+    	pictures.addAll(photoRepository.findByUser_Id(user.getId()));
     	model.addAttribute("allPosts", posts);
-    	
+    	model.addAttribute("photos", pictures);
+    	model.addAttribute("user", user);
     	return "tweet";
     }
     
@@ -187,7 +197,7 @@ public class HomeController {
     	
     	model.addAttribute("friends", users);*/
     	
-    	return "redirect:/allusers/me";
+    	return "redirect:/following";
     }
     
     

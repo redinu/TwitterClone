@@ -59,7 +59,7 @@ public class PostController {
     	
     	posts.addAll(postRepository.findByPostedBy_Id(user.getId()));
     	pictures.addAll(photoRepository.findByUser_Id(user.getId()));
-    	m.addAttribute("allPosts",posts);
+    	m.addAttribute("allPosts", posts);
     	m.addAttribute("photos", pictures);
     	return "newsfeed";
     	
@@ -69,7 +69,12 @@ public class PostController {
     public String allPost(Model m){
     	
     	m.addAttribute("allPosts",postRepository.findAll());
-    	m.addAttribute("photos", photoRepository.findAll());
+    	
+    	List<Photo> photos = (List<Photo>) photoRepository.findAll();
+    	photos.remove(0);
+    	
+    	m.addAttribute("photos", photos);
+    	
     	return "newsfeed";
     	
     }

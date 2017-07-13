@@ -23,6 +23,7 @@ public class Photo {
     @ManyToOne
     @JoinColumn(name="userId")
     private User user;
+    
     @Basic
     private Date createdAt = new Date();
 
