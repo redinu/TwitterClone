@@ -50,6 +50,12 @@ public class HomeController {
     private PhotoRepository photoRepository;
 
     @RequestMapping("/")
+    public String index(){
+    	
+    	return "loginpage";
+    }
+    
+    @RequestMapping("/allposts")
     public String index(Model m){
     	
     	m.addAttribute("allPosts",postRepository.findAll());
@@ -95,11 +101,16 @@ public class HomeController {
     	User user = userRepository.findByEmail(principal.getName());
     	List<Post> posts = postRepository.findByPostedBy_Id(user.getId());
     	List<Photo> pictures =  new ArrayList<Photo>();
+    	List<Friendship> following = friendshipRepository.findByFollower_Id(user.getId());
+    	List<Friendship> follower = friendshipRepository.findByFollowing_Id(user.getId());
     	pictures.addAll(photoRepository.findByUser_Id(user.getId()));
+    	
     	model.addAttribute("allPosts", posts);
     	model.addAttribute("photos", pictures);
     	model.addAttribute("user", user);
-    	return "tweet";
+    	model.addAttribute("following", following);
+    	model.addAttribute("follower", follower);
+    	return "profile";
     }
     
     @RequestMapping("/allusers")
@@ -186,16 +197,6 @@ public class HomeController {
         	friendship.setConfirmed(true);
         	friendshipRepository.save(friendship);
     	}
-    	
-    	/*List<Friendship> friends = friendshipRepository.findByFollower_Id(follower.getId());
-    	List<User> users = new ArrayList<User>();
-    	
-    	for(Friendship friend : friends){
-    		
-    		users.add(friend.getFollowing());
-    	}
-    	
-    	model.addAttribute("friends", users);*/
     	
     	return "redirect:/following";
     }

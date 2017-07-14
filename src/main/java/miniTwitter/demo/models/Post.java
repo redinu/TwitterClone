@@ -8,13 +8,14 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long post_id;
+    private long postId;
 
    @NotEmpty
    private String content;
@@ -22,9 +23,12 @@ public class Post {
    @ManyToOne
    @JoinColumn(name="user_id")
    private User postedBy;
+  
+   @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+   private List<Likes> likes;
    
    
-	private Date postedDate;
+   private Date postedDate;
 
 
 	public String getContent() {
@@ -57,8 +61,19 @@ public class Post {
 	}
 
 
-	public long getPost_id() {
-		return post_id;
+	public long getPostId() {
+		return postId;
 	}
+
+
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
+
 
 }

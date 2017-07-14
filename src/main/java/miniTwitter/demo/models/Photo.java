@@ -4,6 +4,7 @@ import com.cloudinary.StoredFile;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "photos")
 public class Photo {
@@ -23,6 +24,9 @@ public class Photo {
     @ManyToOne
     @JoinColumn(name="userId")
     private User user;
+    
+    @OneToMany(mappedBy = "photo", fetch = FetchType.LAZY, orphanRemoval=true)
+    private List<Likes> likes;
     
     @Basic
     private Date createdAt = new Date();
@@ -86,5 +90,15 @@ public class Photo {
     public void setUpload(StoredFile file) {
         this.image = file.getPreloadedFile();
     }
+
+
+	public List<Likes> getLikes() {
+		return likes;
+	}
+
+
+	public void setLikes(List<Likes> likes) {
+		this.likes = likes;
+	}
     
 }

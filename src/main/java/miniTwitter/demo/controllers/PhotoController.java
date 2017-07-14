@@ -21,9 +21,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.cloudinary.utils.ObjectUtils;
 
 import miniTwitter.demo.configs.CloudinaryConfig;
+import miniTwitter.demo.models.Friendship;
+import miniTwitter.demo.models.Likes;
 import miniTwitter.demo.models.Photo;
+import miniTwitter.demo.models.Post;
 import miniTwitter.demo.models.User;
+import miniTwitter.demo.repositories.FriendshipRepository;
+import miniTwitter.demo.repositories.LikesRepository;
 import miniTwitter.demo.repositories.PhotoRepository;
+import miniTwitter.demo.repositories.PostRepository;
 import miniTwitter.demo.repositories.UserRepository;
 
 
@@ -40,6 +46,15 @@ public class PhotoController {
     @Autowired
     private PhotoRepository photoRepository;
     
+    @Autowired
+    private FriendshipRepository friendshipRepository;
+    
+    @Autowired
+    private PostRepository postRepository;
+    
+    @Autowired
+    private LikesRepository likesRepository;
+    
 	
     	@GetMapping("/upload")
 	    public String uploadForm(){
@@ -55,8 +70,8 @@ public class PhotoController {
 	    public String singleImageUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,Principal p, Model model){
 
 	        if (file.isEmpty()){
-	            redirectAttributes.addFlashAttribute("message","Please select a file to upload");
-	            return "redirect:uploadStatus";
+	            model.addAttribute("message","Please select a file to upload");
+	            return "upload";
 	        }
 
 	        try {
@@ -114,7 +129,7 @@ public class PhotoController {
 	            e.printStackTrace();
 	            model.addAttribute("message", "Sorry I can't upload that!");
 	        }
-	        return "tweet";
+	        return "profile";
 	    }
 	    
 	    @RequestMapping("/filter")
@@ -148,6 +163,24 @@ public class PhotoController {
 	    	return "redirect:/newsfeed";
 	    }
 	    
+	    @RequestMapping(value="/photo/{id}", method = RequestMethod.GET)
+	    public String savePost(@PathVariable(value="id") Long id,  Principal p, Model m){
+	    	
+	    	List<Post> post = postRepository.findByPostedBy_Id(id);
+	    	List<Photo> photos = photoRepository.findByUser_Id(id);
+	    	User user = userRepository.findOne(id);
+	    	List<Friendship> following = friendshipRepository.findByFollower_Id(user.getId());
+	    	List<Friendship> follower = friendshipRepository.findByFollowing_Id(user.getId());
+	    	
+	    	m.addAttribute("allPosts",post);
+	    	m.addAttribute("photos", photos);
+	    	m.addAttribute("user", user);
+	    	m.addAttribute("following", following);
+	    	m.addAttribute("follower", follower);
+	    	return "profile";
+	    }
+	    
+	    
 	    @RequestMapping(path="/getphotos")
 	    public String getGallery(Principal p, Model model){
 	    	
@@ -174,5 +207,33 @@ public class PhotoController {
 	    	
 	    	return "redirect:/newsfeed";
 	    }
-
+	    
+	    @RequestMapping(value="/like/photo/{id}", method = RequestMethod.POST)
+	    public String likePhoto(@PathVariable(value="id") Long id,  Principal p, Model m){
+	    	
+	    	Photo photo = photoRepository.findOne(id);
+	    	User user = userRepository.findByEmail(p.getName());
+	    	
+	    	Likes like = likesRepository.findByPhoto_PhotoIdAndUser_Id(id,user.getId());
+	    	if(like==null){
+	    		like =  new Likes();
+	    		like.setUser(user);
+	        	like.setPhoto(photo);
+	        	likesRepository.save(like);
+	    	}
+	    	
+	    	return "redirect:/newsfeed";
+	    }
+	    
+	    @RequestMapping(value="/likedby/photo/{id}")
+	    public String findlikedBy(@PathVariable(value="id") Long id,  Principal p, RedirectAttributes redirectAttributes){
+	    	
+	    	Photo photo = photoRepository.findOne(id);
+	    	
+	    	List<Likes> likes = likesRepository.findByPhoto_PhotoId(photo.getPhotoId());
+	    	photo.setLikes(likes) ;
+	    	redirectAttributes.addFlashAttribute("photodetail", photo);
+	    	
+	    	return "redirect:/newsfeed";
+	    }
 }

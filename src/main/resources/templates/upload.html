@@ -24,36 +24,7 @@
             <div th:if="${message}">
                 <h2 th:text="${message}"/><br/><br/>
             </div>
-            <!-- <div th:if="${imageurl} != null">
-	            <form action="/filter" >
-	            	<img th:src="${imageurl}" />
-	            	<input type="hidden" name ="imagename" th:value="${imagename}" />
-	            	<p>Filter your picture</p>
-	            	Width:<input type="text" name="width" value="100" /><br/>
-	            	Height:<input type="text" name="height" value="100" /><br/>
-	            	crop:<input type="radio" name="action" value="crop"/><br/>
-	            	<select name="filter">
-					    <option value="sepia">Sepia</option>
-					    <option value="blur">Blur</option>
-					    <option value="blue" >Blue</option>
-					  </select>
-					  <br/>
-	            	<input type="submit" value="Submit" />
-	            </form>
-        	</div>
-        </div>
-         <div th:if="${sizedimageurl} != null">
-                
-                <div th:utext="${sizedimageurl}">
-                
-	                <form action="/save"  method="post">
-	                	<input type="hidden" name="imagename" th:value="${imagename}"/>
-	                	<input type="hidden" name="sizedimageurl" th:value="${sizedimageurl}"/>
-						<input type="submit" value="Save" />
-					</form>
-                </div>
-            </div> 
- -->
+           
         <th:block th:replace="base :: footlinks"></th:block>
     </body>
 </html>

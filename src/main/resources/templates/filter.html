@@ -21,19 +21,22 @@
 	            	<img th:src="${imageurl}" />
 	            	<input type="hidden" name ="imagename" th:value="${imagename}" />
 	            	<p>Filter your picture</p>
-	            	Width:<input type="text" name="width" value="100" /><br/>
-	            	Height:<input type="text" name="height" value="100" /><br/>
+	            	Width:<input type="text" name="width" value="250" /><br/>
+	            	Height:<input type="text" name="height" value="250" /><br/>
 	            	crop:<input type="radio" name="action" value="crop"/><br/>
 	            	<select name="filter">
+	            		<option value="">No effect</option>
 					    <option value="sepia">Sepia</option>
 					    <option value="blur">Blur</option>
-					    <option value="blue" >Blue</option>
-					  </select>
+					    <option value="grayscale" >Grayscale</option>
+					    <option value="cartoonify" >Cartoonify</option>
+					 </select>
 					  <br/>
 	            	<input type="submit" value="Submit" />
 	            </form>
         	</div>
         </div>
+        <div class="container">
          <div th:if="${sizedimageurl} != null">
                 <ul>
                		 <div th:utext="${sizedimageurl}"></div>
@@ -49,7 +52,7 @@
 					</form>
                 
             </div> 
-
+		</div>
         <th:block th:replace="base :: footlinks"></th:block>
     </body>
 </html>

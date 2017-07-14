@@ -12,62 +12,112 @@
 		<th:block th:replace="base :: nav"></th:block>
 		
 		<div class="container">
+			<div class="row">
 			
-			<br/>
-			<br/>
-			<div th:if="${message!=null}" >
-				<h3 th:text="${message}"></h3>
-			</div>
-			<br/>
-			<br/>
-			<div class="col-sm-4 col-md-6">
+			
+			<div class=" col-md-3">
+				<br/><br/>
+				
+				<div th:if="${message!=null}" >
+					<h3 th:text="${message}"></h3>
+				</div>
+				
+				<br/><br/>
 		       <form th:action="@{/savepost}"  method="post">
 					
 					<div class="form-group">
 						<textarea class="form-control" rows="3" placeholder= "new post" name="content"></textarea>
 					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-
+					<button type="submit" class="btn btn-primary btn-sm">Tweet</button>
+					
+					<div class="btn-group" role="group">
+				 	 	<a th:href="@{/upload}" class="btn btn-primary btn-sm">Upload Picture</button>
+				  	</div>
 				</form>
 				<br/>
-				 
-					
-					<a th:href="@{/upload}" class="btn btn-primary">Upload Picture</button>
-
 				
-		
 		    </div>
-		    <br/>
-		    <br />
-		    <br />
-		    <div class ="col-sm-4 col-md-8">
+		    <br/><br /><br /><br />
+		    
+		    
+		    <div class =" col-md-7">
 				<ul>
-					<div th:each="post : ${allPosts}">
-						<div class="content">
-							<a th:href="@{/post/{id}(id = ${post.postedBy.id})}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"></a>
-								<small><span th:text="${post.postedBy.username}"></span></small>
+					<div th:if="${allPosts!=null}">
+						<th:block th:each="post : ${allPosts}">
 							
-							<p th:text="${post.content}"/>
-							<p th:text="${post.postedDate}"/>
+							<div class="panel panel-default">
+						 		 <div class="panel-body">
+								
+								<strong><a th:href="@{/post/{id}(id = ${post.postedBy.id})}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"></a></strong>
+								<small><span th:text="${post.postedBy.username}"></span></small>
+								
+								<p th:text="${post.content}"/>
+								<small><p th:text="${post.postedDate}"></p></small>
+								
+								<a th:href="@{/likedby/post/{postId}(postId=${post.postId})}" th:utext="${#lists.size(post.likes)} + ' likes'"></a> 
+								<br/>
+								<div class= "col-md-0.5">
+									<div th:if="${postdetail!=null}">
+										<ul th:each="like : ${postdetail.likes}">
+											<p>
+												<span th:text="${like.user.firstName + ' ' + like.user.lastName}"></span>,
+											</p>
+										</ul>
+									</div>
+								</div>
+								<div class= "col-md-1">
+									<form th:action="@{/like/post/{postId}(postId=${post.postId})}" method= "post">
+										<button type="submit" class="btn btn-primary btn-xs">Like</button>
+									</form>
+								</div>
+							</div>
 						</div>
+							
+						</th:block>
 					</div>
+					
+				
 					<div th:if="${photos!=null}">
 						<th:block th:each="photo : ${photos}">
-							<a th:href="@{/post/{id}(id = ${photo.user.id})}" th:text="${photo.user.firstName + ' ' + photo.user.lastName}"></a>
-							<br/>
-							<div th:utext="${photo.image}"></div>
-							<br/>
-								<form th:action="@{/delete/{photoId}(photoId=${photo.photoId})}" method= "post">
-									 	<button type="submit" class="btn btn-default">Delete</button>
-								</form>
+						
+						<div class="panel panel-default">
+							 	<div class="panel-body">
+							 		 
+									<strong><a th:href="@{/photo/{id}(id = ${photo.user.id})}" th:text="${photo.user.firstName + ' ' + photo.user.lastName}"></a></strong>
+									<small><a th:href="@{/photo/{id}(id = ${photo.user.id})}" th:text="${'@' + photo.user.username}"></a></small>
+									<br/>
+									<div th:utext="${photo.image}"></div>
+									<div><small><span th:text ="${photo.createdAt}"></span></small></div>
+									<br/>
+									<a th:href="@{/likedby/photo/{photoId}(photoId=${photo.photoId})}" th:text="${#lists.size(photo.likes) + ' likes'}"></a>
+									
+									<div class= "col-md-0.5">
+										<div th:if="${photodetail!=null}">
+												<ul th:each="like : ${photodetail.likes}">
+													<p>
+														<span th:text="${like.user.firstName + ' ' + like.user.lastName}"></span>,
+													</p>
+												</ul>
+										</div>
+									</div>
+									<div class= "col-md-1">
+									<form th:action="@{/like/photo/{photoId}(photoId=${photo.photoId})}" method= "post">
+										 <button type="submit" class="btn btn-primary btn-xs">Like</button>
+									</form>
+									</div>
+									
+									<div class= "col-md-2">
+									<form th:action="@{/delete/{photoId}(photoId=${photo.photoId})}" method= "post">
+										<button type="submit" class="btn btn-primary btn-xs">Delete</button>
+									</form>
+									</div>
+								</div>
+							</div>
 						</th:block>
 					</div>
 				</ul>
 				
-					
-				
-					
-				
+				</div>
 			</div>
 		</div>
 		

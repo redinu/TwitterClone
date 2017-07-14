@@ -64,7 +64,6 @@
     <ul class="nav navbar-nav navbar-right">
     	<li sec:authorize="isAuthenticated()"><a href="/follower" >Followers</a></li>
     	<li sec:authorize="isAuthenticated()"><a href="/following" >Following</a></li>
-    	<li class="white" sec:authorize="isAuthenticated()"><a sec:authentication="name" href="#"></li>
     	<li class="white" sec:authorize="isAuthenticated()"><a href="/me">Profile</a></li>
         <li class="white" sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
       
@@ -73,13 +72,12 @@
         <ul class="dropdown-menu">
 	    	<li sec:authorize="isAuthenticated()"><a href="/follower" >Followers</a></li>
 	    	<li sec:authorize="isAuthenticated()"><a href="/following" >Following</a></li>
-	    	<li class="white" sec:authorize="isAuthenticated()"><a sec:authentication="name" href="#"></li>
 	    	<li class="white" sec:authorize="isAuthenticated()"><a href="/me">Profile</a></li>
 	        <li class="white" sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
 	     </ul>
       </li>
     </ul>
-  </div><!-- /.navbar-collapse -->
+  </div>
     </div>
 </nav>
 

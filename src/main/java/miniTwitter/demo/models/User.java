@@ -27,8 +27,7 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
     
-
-	@Column (name = "username")
+    @Column (name = "username")
     private String username;
 
     @Column(name = "enabled")
