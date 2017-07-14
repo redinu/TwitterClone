@@ -63,7 +63,7 @@ public class PhotoController {
 	   
 	   	@GetMapping("/uploadProfile")
 	    public String uploadProfileForm(){
-	        return "uploadProfile";
+	        return "uploadprofile";
 	    }
 
 	    @PostMapping("/upload")
@@ -110,7 +110,9 @@ public class PhotoController {
 	            String filename = uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString();
 	            
 	            User user = userRepository.findByEmail(p.getName());
-	            
+	            List<Friendship> following = friendshipRepository.findByFollower_Id(user.getId());
+	        	List<Friendship> follower = friendshipRepository.findByFollowing_Id(user.getId());
+	        	
 	            Photo photo = new Photo();
 	            photo.setImage(cloudc.createautoUrl(filename, 150, 150));
 	            photo.setFileName(filename);
@@ -124,6 +126,8 @@ public class PhotoController {
 	            model.addAttribute("imageurl", cloudc.createautoUrl(filename, 150, 150));
 	            model.addAttribute("user", user);
 	            model.addAttribute("imagename", filename);
+	            model.addAttribute("following", following);
+	        	model.addAttribute("follower", follower);
 	            
 	        } catch (IOException e){
 	            e.printStackTrace();

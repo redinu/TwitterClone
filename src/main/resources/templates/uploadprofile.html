@@ -13,10 +13,10 @@
         <th:block th:replace="base :: nav"></th:block>
 
         <div class="container">
-            <br /><br />
-            <div class="col-md-12">	
-            	<h1>Upload a picture</h1>
-
+            <br/><br/><br/><br/><br/>
+	            <div class="col-md-12">	
+		            <h3>Upload a picture</h3>
+		            
 	            <form method="POST" action="/uploadProfile" enctype="multipart/form-data">
 	             	 <div class="form-group">  
 		              		<input type="file" name="file" />
@@ -28,7 +28,7 @@
 		               </div>
 	            </form>
 	            <div th:if="${message}">
-	                <h2 th:text="${message}"></h2><br/><br/>
+	                <strong><p th:text="${message}"></p></strong><br/><br/>
 	            </div>
  			</div>
  		</div>

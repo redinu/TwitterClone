@@ -49,7 +49,6 @@
 						 		 <div class="panel-body">
 								
 								<strong><a th:href="@{/post/{id}(id = ${post.postedBy.id})}" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"></a></strong>
-								<small><span th:text="${post.postedBy.username}"></span></small>
 								
 								<p th:text="${post.content}"/>
 								<small><p th:text="${post.postedDate}"></p></small>
@@ -84,7 +83,6 @@
 							 	<div class="panel-body">
 							 		 
 									<strong><a th:href="@{/photo/{id}(id = ${photo.user.id})}" th:text="${photo.user.firstName + ' ' + photo.user.lastName}"></a></strong>
-									<small><a th:href="@{/photo/{id}(id = ${photo.user.id})}" th:text="${'@' + photo.user.username}"></a></small>
 									<br/>
 									<div th:utext="${photo.image}"></div>
 									<div><small><span th:text ="${photo.createdAt}"></span></small></div>
