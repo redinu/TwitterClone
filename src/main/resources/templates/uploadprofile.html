@@ -14,17 +14,24 @@
 
         <div class="container">
             <br /><br />
-            <h1>Upload a picture</h1>
+            <div class="col-md-12">	
+            	<h1>Upload a picture</h1>
 
-            <form method="POST" action="/uploadProfile" enctype="multipart/form-data">
-                <input type="file" name="file" /><br/><br/>
-                
-                <input type="submit" value="Submit" />
-            </form>
-            <div th:if="${message}">
-                <h2 th:text="${message}"/><br/><br/>
-            </div>
- 
+	            <form method="POST" action="/uploadProfile" enctype="multipart/form-data">
+	             	 <div class="form-group">  
+		              		<input type="file" name="file" />
+		             </div>
+		             <br/><br/>
+		                
+		               <div class="form-group"> 
+		               			<button type="submit" class="btn btn-primary btn-sm" >Upload</button>
+		               </div>
+	            </form>
+	            <div th:if="${message}">
+	                <h2 th:text="${message}"></h2><br/><br/>
+	            </div>
+ 			</div>
+ 		</div>
         <th:block th:replace="base :: footlinks"></th:block>
     </body>
 </html>

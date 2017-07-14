@@ -12,7 +12,10 @@
 		<th:block th:replace="base :: nav"></th:block>
 		
 		<div class="container">
+			<div class="row">
 			
+			
+			<div class=" col-md-6">
 			<br/>
 			<br/>
 			<div th:if="${message!=null}" >
@@ -23,26 +26,34 @@
 		    <br/>
 		    <br />
 		    <br />
-		    <div class ="col-sm-4 col-md-8">
+		    
 				<ul>
 					<div th:each="post : ${allPosts}">
-						<div class="content">
-							<div th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"></div>
-								<small><span th:text="${post.postedBy.username}"></span></small>
-							
-							<p th:text="${post.content}"/>
-							<p th:text="${post.postedDate}"/>
+						<div class="panel panel-default">
+							 <div class="panel-body">
+								
+								<div class="content">
+									<div><strong> <a th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"></a></strong></div>
+										<small><span th:text="${post.postedBy.username}"></span></small>
+									
+									<p th:text="${post.content}"/>
+									<p th:text="${post.postedDate}"/>
+								</div>
+							</div>
 						</div>
 					</div>
+					
 					<div th:if="${photos!=null}">
 						<th:block th:each="photo : ${photos}">
-							<div th:text="${photo.user.firstName + ' ' + photo.user.lastName}"></div>
-							<br/>
-							<div th:utext="${photo.image}"></div>
-							<br/>
-								<form th:action="@{/delete/{photoId}(photoId=${photo.photoId})}" method= "post">
-									 	<button type="submit" class="btn btn-default">Delete</button>
-								</form>
+							<div class="panel panel-default">
+							 	<div class="panel-body">
+								
+									<div> <strong><a th:text="${photo.user.firstName + ' ' + photo.user.lastName}"></a></strong></div>
+									<br/>
+									<div th:utext="${photo.image}"></div>
+									<br/>
+										
+								</div>
 						</th:block>
 					</div>
 				</ul>
@@ -50,7 +61,7 @@
 				
 			</div>
 		</div>
-		
+		</div>
 		<th:block th:replace="base :: footlinks"></th:block>
 	</body>
 </html>

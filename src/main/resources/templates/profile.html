@@ -44,7 +44,7 @@
 							<div class="panel panel-default">
 						 		 <div class="panel-body">
 						 		 
-								<p><a href="#" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/>
+							<p><strong><a href="#" th:text="${post.postedBy.firstName + ' ' + post.postedBy.lastName}"/></strong>	
 									<small><span th:text="${'@' + post.postedBy.username}"></span></small>
 								</p>
 								<p th:text="${post.content}"/>
